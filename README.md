@@ -1,5 +1,7 @@
 
-# Este archivo explica cómo deben trabajar los alumnos:
+# Implementación de los algoritmos de ordenamiento
+
+A continuación se detalla cómo deben trabajar los equipos para implementar los algoritmos de ordenamiento en este repositorio.:
 
 ## Cada equipo deberá:
 
