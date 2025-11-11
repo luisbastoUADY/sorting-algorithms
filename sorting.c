@@ -145,9 +145,22 @@ void bubbleSort(Array *arr) {
     if (arr == NULL || arr->data == NULL) {
         return;
     }
-    
-    printf("Bubble Sort - To be implemented\n");
-    // TODO: Implement bubble sort algorithm
+
+    printf("Aplicando Bubble Sort...\n");
+
+    int i, j;
+    int n = arr->size;
+    float *data = arr->data;
+
+    for (i = 0; i < n - 1; i++) {
+
+        for (j = 0; j < n - i - 1; j++) {
+
+            if (data[j] > data[j + 1]) {
+                swap(&data[j], &data[j + 1]);
+            }
+        }
+    }
 }
 
 // Selection Sort
