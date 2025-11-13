@@ -198,14 +198,50 @@ void cocktailSort(Array *arr) {
 
 // Funciones auxiliares para Heap Sort
 void heapify(float *data, int n, int i) {
-    
+    int largest = i;       // Inicializa el nodo raíz como el más grande
+    int left = 2 * i + 1;  // Hijo izquierdo
+    int right = 2 * i + 2; // Hijo derecho
+
+    // Si el hijo izquierdo es más grande que la raíz
+    if (left < n && data[left] > data[largest])
+        largest = left;
+
+    // Si el hijo derecho es más grande que el más grande hasta ahora
+    if (right < n && data[right] > data[largest])
+        largest = right;
+
+    // Si el más grande no es la raíz
+    if (largest != i) {
+        swap(&data[i], &data[largest]);
+        // Recursivamente aplica heapify en el subárbol afectado
+        heapify(data, n, largest);
+    }
 }
 
 // Heap Sort
 void heapSort(Array *arr) {
-    
+    if (arr == NULL || arr->data == NULL) {
+        return;
+    }
+
     printf("Aplicando Heap Sort...\n");
 
+    int n = arr->size;
+    float *data = arr->data;
+
+    // Construir el heap (reorganizar el arreglo)
+    for (int i = n / 2 - 1; i >= 0; i--) {
+        heapify(data, n, i);
+    }
+
+    // Extraer elementos uno por uno del heap
+    for (int i = n - 1; i > 0; i--) {
+        // Mover la raíz actual al final
+        swap(&data[0], &data[i]);
+
+        // Llamar heapify en el heap reducido
+        heapify(data, i, 0);
+    }
 }
 
 // Definir estructuras y funciones auxiliares para Tree Sort
@@ -352,3 +388,4 @@ int main() {
     
     return 0;
 }
+
