@@ -193,11 +193,27 @@ void selectionSort(Array *arr) {
     if (arr == NULL || arr->data == NULL) {
         return;
     }
-    
-    printf("Selection Sort - To be implemented\n");
-    // TODO: Implement selection sort algorithm
-}
 
+    int i, j, min_idx;
+    int n = arr->size;
+
+    unsigned long long iterations = 0ULL; 
+
+    for (i = 0; i < n - 1; i++) {
+        min_idx = i;
+        for (j = i + 1; j < n; j++) {
+            iterations++; 
+            if (arr->data[j] < arr->data[min_idx]) {
+                min_idx = j;
+            }
+        }
+        if (min_idx != i) {
+            swap(&arr->data[min_idx], &arr->data[i]);
+        }
+    }
+
+    printf("\nNumero de iteraciones: %llu\n", iterations);
+}
 // Insertion Sort
 void insertionSort(Array *arr) {
     if (arr == NULL || arr->data == NULL) {
