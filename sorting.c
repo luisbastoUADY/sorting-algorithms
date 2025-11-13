@@ -232,6 +232,37 @@ void mergeSort(Array *arr) {
 // Cocktail Sort 
 void cocktailSort(Array *arr) {
     printf("Aplicando Cocktail Sort...\n");
+     if (arr == NULL || arr->data == NULL) return;
+    
+    float *a = arr->data; 
+    int n = arr->size;
+
+    int s=1, ini=0, fin=n-1, i, sw=0, it=0;
+    float t; 
+
+    while(s) {
+        s=0; it++;
+        // Ida ->
+        for(i=ini; i<fin; ++i)
+            if(a[i] > a[i+1]) { 
+                printf("It %d(Ida): %.2f <-> %.2f\n", it, a[i], a[i+1]); 
+                t=a[i]; a[i]=a[i+1]; a[i+1]=t; // Swap inline de floats
+                s=1; sw++; 
+            }
+        
+        if(!s) break;
+        
+        // Vuelta <-
+        fin--;
+        for(i=fin-1; i>=ini; --i)
+            if(a[i] > a[i+1]) { 
+                printf("It %d(Vuelta): %.2f <-> %.2f\n", it, a[i], a[i+1]); 
+                t=a[i]; a[i]=a[i+1]; a[i+1]=t; // Swap inline de floats
+                s=1; sw++; 
+            }
+        ini++;
+    }
+    printf("\nTotal Iteraciones: %d\nTotal Swaps: %d\n----------------\n", it, sw);
 }
 
 // Funciones auxiliares para Heap Sort
