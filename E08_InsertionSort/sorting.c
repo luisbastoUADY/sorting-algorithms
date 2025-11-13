@@ -200,12 +200,58 @@ void selectionSort(Array *arr) {
 
 // Insertion Sort
 void insertionSort(Array *arr) {
+    // Verificamos que el puntero al arreglo y a sus datos sea válido.
     if (arr == NULL || arr->data == NULL) {
         return;
     }
     
-    printf("Insertion Sort - To be implemented\n");
-    // TODO: Implement insertion sort algorithm
+    int i, j;
+    float key; // Esta será la variable para guardar el elemento que estamos insertando
+    int n = arr->size; // Obtenemos el tamaño para que el código sea más limpio
+
+    // --- Inicio del Algoritmo ---
+    
+    // 1. Empezamos el bucle principal en el segundo elemento (índice 1).
+    //    Imaginamos que el primer elemento (índice 0) ya es una
+    //    sub-lista ordenada por sí sola.
+    for (i = 1; i < n; i++) {
+        
+        // 2. 'key' toma el valor del elemento actual.
+        //    Este es el elemento que intentaremos "insertar" en la
+        //    parte izquierda (la que ya está ordenada).
+        key = arr->data[i];
+        
+        // 3. 'j' se inicializa en el índice justo ANTES de 'key'.
+        //    Usaremos 'j' para movernos "hacia atrás" (hacia la izquierda)
+        //    a través de la sub-lista ya ordenada.
+        j = i - 1;
+
+        // 4. Este bucle 'while' es el corazón del algoritmo:
+        //    Mientras 'j' todavía esté dentro del arreglo (j >= 0) Y
+        //    el elemento en la posición 'j' (arr->data[j]) sea MÁS GRANDE
+        //    que el elemento que queremos insertar (key)...
+        while (j >= 0 && arr->data[j] > key) {
+            
+            // ... movemos el elemento grande (arr->data[j]) una posición
+            //     hacia la derecha (a arr->data[j + 1]).
+            //     Esto crea un "hueco" para insertar 'key' más tarde.
+            arr->data[j + 1] = arr->data[j];
+            
+            // ... retrocedemos 'j' para revisar el siguiente elemento
+            //     de la sub-lista ordenada.
+            j = j - 1;
+        }
+        
+        // 5. Cuando el bucle 'while' termina, significa que:
+        //    a) Llegamos al inicio del arreglo (j = -1)
+        //    b) Encontramos un elemento más pequeño (o igual) que 'key'.
+        //
+        //    La posición correcta para 'key' es 'j + 1' (el "hueco" que creamos).
+        arr->data[j + 1] = key;
+    }
+    
+    // No necesitamos un 'return'. El arreglo se ordena "in-place"
+    // (modificando el original).
 }
 
 // Quick Sort
