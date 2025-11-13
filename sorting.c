@@ -140,14 +140,52 @@ void swap(float *a, float *b) {
 // ALGORITMOS DE ORDENAMIENTO PARA IMPLEMENTAR
 // ============================================
 
-// Bubble Sort
+// Bubble Sort 
+
 void bubbleSort(Array *arr) {
     if (arr == NULL || arr->data == NULL) {
         return;
     }
-    
-    printf("Bubble Sort - To be implemented\n");
-    // TODO: Implement bubble sort algorithm
+
+    printf("Aplicando Bubble Sort...\n");
+
+    int i, j;
+    int n = arr->size;
+    float *data = arr->data;
+
+    // Se añadió un contador para el número de iteraciones (comparaciones)
+    int iteraciones = 0;
+
+    // Se añadió un contador para el número de swaps (intercambios)
+    int swaps = 0;
+
+    // Se modificó el bucle externo para recorrer todas las pasadas del algoritmo
+    for (i = 0; i < n - 1; i++) {
+
+        // Se agregó una optimización opcional: bandera para detectar si ya está ordenado
+        int ordenado = 1;
+
+        // Se recorre el arreglo comparando elementos adyacentes
+        for (j = 0; j < n - i - 1; j++) {
+            iteraciones++;  // Se incrementa el contador de comparaciones
+
+            if (data[j] > data[j + 1]) {
+                swap(&data[j], &data[j + 1]);
+                swaps++;       // Se incrementa el contador de swaps
+                ordenado = 0;  //  Indica que se realizó un intercambio
+            }
+        }
+
+        // Si en una pasada no hubo swaps, el arreglo ya está ordenado
+        if (ordenado) {
+            break;
+        }
+    }
+
+    //  Se agregó la impresión final de estadísticas
+    printf("\nEstadísticas del Bubble Sort:\n");
+    printf("Iteraciones (comparaciones): %d\n", iteraciones);
+    printf("Intercambios (swaps): %d\n", swaps);
 }
 
 // Selection Sort
