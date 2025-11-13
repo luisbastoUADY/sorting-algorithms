@@ -140,14 +140,52 @@ void swap(float *a, float *b) {
 // ALGORITMOS DE ORDENAMIENTO PARA IMPLEMENTAR
 // ============================================
 
-// Bubble Sort
+// Bubble Sort 
+
 void bubbleSort(Array *arr) {
     if (arr == NULL || arr->data == NULL) {
         return;
     }
-    
-    printf("Bubble Sort - To be implemented\n");
-    // TODO: Implement bubble sort algorithm
+
+    printf("Aplicando Bubble Sort...\n");
+
+    int i, j;
+    int n = arr->size;
+    float *data = arr->data;
+
+    // Se añadió un contador para el número de iteraciones (comparaciones)
+    int iteraciones = 0;
+
+    // Se añadió un contador para el número de swaps (intercambios)
+    int swaps = 0;
+
+    // Se modificó el bucle externo para recorrer todas las pasadas del algoritmo
+    for (i = 0; i < n - 1; i++) {
+
+        // Se agregó una optimización opcional: bandera para detectar si ya está ordenado
+        int ordenado = 1;
+
+        // Se recorre el arreglo comparando elementos adyacentes
+        for (j = 0; j < n - i - 1; j++) {
+            iteraciones++;  // Se incrementa el contador de comparaciones
+
+            if (data[j] > data[j + 1]) {
+                swap(&data[j], &data[j + 1]);
+                swaps++;       // Se incrementa el contador de swaps
+                ordenado = 0;  //  Indica que se realizó un intercambio
+            }
+        }
+
+        // Si en una pasada no hubo swaps, el arreglo ya está ordenado
+        if (ordenado) {
+            break;
+        }
+    }
+
+    //  Se agregó la impresión final de estadísticas
+    printf("\nEstadísticas del Bubble Sort:\n");
+    printf("Iteraciones (comparaciones): %d\n", iteraciones);
+    printf("Intercambios (swaps): %d\n", swaps);
 }
 
 // Selection Sort
@@ -194,20 +232,86 @@ void mergeSort(Array *arr) {
 // Cocktail Sort 
 void cocktailSort(Array *arr) {
     printf("Aplicando Cocktail Sort...\n");
+     if (arr == NULL || arr->data == NULL) return;
+    
+    float *a = arr->data; 
+    int n = arr->size;
+
+    int s=1, ini=0, fin=n-1, i, sw=0, it=0;
+    float t; 
+
+    while(s) {
+        s=0; it++;
+        // Ida ->
+        for(i=ini; i<fin; ++i)
+            if(a[i] > a[i+1]) { 
+                printf("It %d(Ida): %.2f <-> %.2f\n", it, a[i], a[i+1]); 
+                t=a[i]; a[i]=a[i+1]; a[i+1]=t; // Swap inline de floats
+                s=1; sw++; 
+            }
+        
+        if(!s) break;
+        
+        // Vuelta <-
+        fin--;
+        for(i=fin-1; i>=ini; --i)
+            if(a[i] > a[i+1]) { 
+                printf("It %d(Vuelta): %.2f <-> %.2f\n", it, a[i], a[i+1]); 
+                t=a[i]; a[i]=a[i+1]; a[i+1]=t; // Swap inline de floats
+                s=1; sw++; 
+            }
+        ini++;
+    }
+    printf("\nTotal Iteraciones: %d\nTotal Swaps: %d\n----------------\n", it, sw);
 }
 
 // Funciones auxiliares para Heap Sort
 void heapify(float *data, int n, int i) {
-    
+    int largest = i;       // Inicializa el nodo raíz como el más grande
+    int left = 2 * i + 1;  // Hijo izquierdo
+    int right = 2 * i + 2; // Hijo derecho
+
+    // Si el hijo izquierdo es más grande que la raíz
+    if (left < n && data[left] > data[largest])
+        largest = left;
+
+    // Si el hijo derecho es más grande que el más grande hasta ahora
+    if (right < n && data[right] > data[largest])
+        largest = right;
+
+    // Si el más grande no es la raíz
+    if (largest != i) {
+        swap(&data[i], &data[largest]);
+        // Recursivamente aplica heapify en el subárbol afectado
+        heapify(data, n, largest);
+    }
 }
 
 // Heap Sort
 void heapSort(Array *arr) {
-    
+    if (arr == NULL || arr->data == NULL) {
+        return;
+    }
+
     printf("Aplicando Heap Sort...\n");
 
-}
+    int n = arr->size;
+    float *data = arr->data;
 
+    // Construir el heap (reorganizar el arreglo)
+    for (int i = n / 2 - 1; i >= 0; i--) {
+        heapify(data, n, i);
+    }
+
+    // Extraer elementos uno por uno del heap
+    for (int i = n - 1; i > 0; i--) {
+        // Mover la raíz actual al final
+        swap(&data[0], &data[i]);
+
+        // Llamar heapify en el heap reducido
+        heapify(data, i, 0);
+    }
+}
 // Definir estructuras y funciones auxiliares para Tree Sort
 
 
