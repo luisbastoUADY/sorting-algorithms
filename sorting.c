@@ -353,6 +353,50 @@ void tournamentSort(Array *arr) {
     
 }
 
+// Shell Sort with Shell's increment sequence
+void shellSort(Array *arr) {
+    if (arr == NULL || arr->data == NULL) {
+        return;
+    }
+
+    printf("Aplicando Shell Sort...\n");
+
+    long comparisons = 0;
+    long swaps = 0; // Use long to handle large counts and avoid overflow
+    
+    int iterations_gap = 0;
+    int n = arr->size; // Size of the array
+    int gap = n / 2;   // Initial gap between elements
+
+    while (gap > 0) { /*
+        * Continue while the gap is at least 1.
+        * - Shifting elements by zero positions doesn’t make sense.
+        * - Shell Sort keeps the array sorted even if gap were negative.
+        */
+        iterations_gap++; // Count the number of gap iterations
+        for (int i = gap; i < n; i++) { // Iterate through the elements from 'gap' to the end of the array
+            int j = i;
+            comparisons++; // First comparison for while condition
+            while (j >= gap && arr->data[j - gap] > arr->data[j]) { // Compare the current element with the ones 'gap' positions before it
+                swap(&arr->data[j], &arr->data[j - gap]); // // Move inserted element back to its correct position
+                swaps++; // Count the swap
+                j -= gap;
+                comparisons++; //next comparison for while condition
+            }
+        }
+        gap /= 2; // Reduce gap for next iteration
+    }
+
+    printf("Métricas\n");
+    printf("Comparaciones totales: %ld\n", comparisons);
+    printf("Intercambios totales: %ld\n", swaps);
+    printf("Gaps usados { ");
+    for (int aux_gaps = n / 2; aux_gaps > 0; aux_gaps /= 2) {
+        printf("%d ", aux_gaps);
+    }
+    printf("}\n");
+}
+
 // ============================================
 // MAIN FUNCTION
 // ============================================

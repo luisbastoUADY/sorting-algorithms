@@ -362,9 +362,9 @@ void shellSort(Array *arr) {
     printf("Aplicando Shell Sort...\n");
 
     long comparisons = 0;
-    long swaps = 0;
+    long swaps = 0; // Use long to handle large counts and avoid overflow
+    
     int iterations_gap = 0;
-
     int n = arr->size; // Size of the array
     int gap = n / 2;   // Initial gap between elements
 
