@@ -332,11 +332,85 @@ void heapSort(Array *arr) {
 
 
 // Tree Sort
-void treeSort(Array *arr) {
 
-    printf("Aplicando Tree Sort...\n");
-    
+// Nodo de un árbol binario
+typedef struct Node {
+    int data;
+    struct Node *left;
+    struct Node *right;
+} Node;
+
+// Crear un nuevo nodo
+Node* createNode(int data) {
+    Node *newNode = (Node*)malloc(sizeof(Node));
+    if (newNode == NULL) {
+        fprintf(stderr, "Error: Memoria insuficiente.\n");
+        exit(EXIT_FAILURE);
+    }
+    newNode->data = data;
+    newNode->left = newNode->right = NULL;
+    return newNode;
 }
+
+// Insertar nodo en el arbol
+Node* insertNode(Node *root, int data) {
+    if (root == NULL) {
+        return createNode(data);
+    }
+
+    if (data < root->data) {
+        root->left = insertNode(root->left, data);
+    } else if (data > root->data) {
+        root->right = insertNode(root->right, data);
+    }
+
+    return root;
+}
+
+// Recorrido inorder
+void inorder(Node *root, int arr[], int *index) {
+    if (root != NULL) {
+        inorder(root->left, arr, index);
+        arr[(*index)++] = root->data;
+        inorder(root->right, arr, index);
+    }
+}
+
+// Liberar memoria
+void freeTree(Node *root) {
+    if (root != NULL) {
+        freeTree(root->left);
+        freeTree(root->right);
+        free(root);
+    }
+}
+
+// Función final de Tree Sort
+
+void treeSort(int arr[], int size) {
+
+    if (arr == NULL || size <= 0) {
+        printf("Error: arreglo inválido.\n");
+        return;
+    }
+
+    printf("Aplicando Tree Sort......\n");
+
+    // Construir el árbol
+    Node *root = NULL;
+    for (int i = 0; i < size; i++) {
+        root = insertNode(root, arr[i]);
+    }
+
+    // Obtener arreglo ordenado
+    int index = 0;
+    inorder(root, arr, &index);
+
+    freeTree(root);
+
+    printf("Tree Sort completado.\n");
+}
+
 
 // Funciones auxiliares para Tournament Sort
 typedef struct TournamentNode {
