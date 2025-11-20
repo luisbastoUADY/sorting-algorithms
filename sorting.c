@@ -224,14 +224,34 @@ void insertionSort(Array *arr) {
     // TODO: Implement insertion sort algorithm
 }
 
-// Quick Sort
+// Función recursiva de QuickSort
+void quickSortRecursive(float *data, int low, int high) {
+    if (low >= high) {
+        return;
+    }
+
+    int index = partition(data, low, high);
+
+    if (low < index - 1) {
+        quickSortRecursive(data, low, index - 1);
+    }
+
+    if (index < high) {
+        quickSortRecursive(data, index, high);
+    }
+}
+// Función principal de QuickSort usada en el menú
 void quickSort(Array *arr) {
     if (arr == NULL || arr->data == NULL) {
         return;
     }
-    
-    printf("Quick Sort - To be implemented\n");
-    // TODO: Implement quick sort algorithm
+
+    int n = arr->size;
+    if (n <= 1) {
+        return;
+    }
+
+    quickSortRecursive(arr->data, 0, n - 1);
 }
 
 // Merge Sort
